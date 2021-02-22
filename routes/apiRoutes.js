@@ -26,5 +26,13 @@ module.exports = (app) => {
             newNote.id = (notes[notes.length-1].id + 1);
         }
         notes.push(newNote);
+        let.jsonNotes = JSON.stringify(notes);
+        fs.writeFile('.db/db.json', jsonNotes, (err) => {
+            if (err) {
+                console.log(err);
+            }
+            console.log('Sucess!');
+        })
+        res.json(true);
     })
 };
