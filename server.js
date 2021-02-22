@@ -9,10 +9,10 @@ app.use(express.json());
 app.use(express.static('public'));
 
 //This will be the path for api routes
-require('./')(app);
+require("./routes/apiRoutes")(app);
 
 //this will be the path for html routes
-require('./')(app);
+require("./routes/htmlRoutes")(app);
 
 app.listen(PORT, () => {
     console.log(`Server is listening on port: ${PORT}`);
