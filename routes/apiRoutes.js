@@ -18,5 +18,13 @@ module.exports = (app) => {
         return res.json(false);
     });
 
-    
+    app.post('/api/notes', (req, res) => {
+        const newNote = req.body;
+        if (notes.length === 0){
+            newNote.id = 1;
+        }else {
+            newNote.id = (notes[notes.length-1].id + 1);
+        }
+        notes.push(newNote);
+    })
 };
