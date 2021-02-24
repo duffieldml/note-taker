@@ -7,11 +7,11 @@ const writeFileAsync = util.promisify(fs.writeFile);
 class Store {
 
     readNotes() {
-        return readFileAsync('db/db.json', 'utf8');
+        return readFileAsync('/db/db.json', 'utf8');
     };
 
     writeNotes(data) {
-        return writeFileAsync('db/db.json', JSON.stringify(data));
+        return writeFileAsync('/db/db.json', JSON.stringify(data));
     }
 
     getNotes() {
@@ -20,7 +20,7 @@ class Store {
 
             try {
                 notes = [].concat(JSON.parse(data))
-            } catch(error){
+            } catch(err){
                 notes = [];
             };
             return notes
