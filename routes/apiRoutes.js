@@ -1,16 +1,18 @@
-const store = require('../db/store');
-const path = require('path');
+const store = require('../db/store.js');
+const router = require('express').Router();
 
-module.exports = (app) => {
-    app.get('/api/notes', (req, res) => {
-        store.getNotes().then(data => {
-            return res.json(data);
-        });
-    });
+router.get('/notes', (req, res) => {
+    store.getNotes()
+    .then((data) => {
+        return res.json(data);
+    })
+    .catch((err) => res.status(500).json(err))
+});
 
-    app.post('/api/notes', (req, res) => {
-        const newNote = req.body;
+router.post('/notes', (req, res) => {
+    store.addNotes(req.body)
+    .then((data) => res.json(data))
+    .catch((err) => res.status(500).json(err))
+});
 
-        store.addNotes(newNote).then(data => res.json(data));
-    });
-};
+module.exports = router;
