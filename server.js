@@ -1,7 +1,7 @@
 const express = require('express');
-const apiRoutes = require('./routes/apiRoutes.js');
-const htmlRoutes = require('./routes/htmlRoutes.js');
-
+const path = require('path');
+const fs = require('fs');
+// const notesSaved = require('../db/db.json');
 
 const PORT = process.env.PORT || 3000;
 
@@ -9,7 +9,7 @@ const app = express();
 
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.static(__dirname + '/public'));
 
 //This will be the path for api routes
 // require("./routes/apiRoutes")(app);
@@ -17,8 +17,8 @@ app.use(express.static('public'));
 // //this will be the path for html routes
 // require("./routes/htmlRoutes")(app);
 
-app.use('/api', apiRoutes);
-app.use('/', htmlRoutes);
+app.use(require('./routes/htmlRoutes'));
+app.use(require('./routes/apiRoutes'));
 
 app.listen(PORT, () => {
     console.log(`Server is listening on port: ${PORT}`);
