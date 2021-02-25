@@ -17,8 +17,8 @@ app.use(express.static(__dirname + '/public'));
 // //this will be the path for html routes
 // require("./routes/htmlRoutes")(app);
 
-app.use(require('./routes/htmlRoutes'));
-app.use(require('./routes/apiRoutes'));
+app.use(require('./routes/htmlRoutes.js'));
+app.use(require('./routes/apiRoutes.js'));
 
 app.listen(PORT, () => {
     console.log(`Server is listening on port: ${PORT}`);

@@ -8,12 +8,14 @@ const notesSaved = require('../db/db.json');
 app.use(express.json());
 
 router.get('/notes', (req, res) => {
-    res.sendFile(path.join(__dirname, '../public','notes.html'))
+    res.sendFile(path.join(__dirname, '../public/notes.html'))
     .catch((err) => res.status(500).json(err))
 });
 
 router.get('/api/notes', (req, res) => {
-    res.send(notesSaved);
+    res.getNotes().then(data => {
+        return res.json(data);
+    });
 });
 
 router.post('/api/notes', (req, res) => {
@@ -24,7 +26,7 @@ router.post('/api/notes', (req, res) => {
     }
     notesSaved.push(newNote);
     const note = JSON.stringify(notesSaved, null, 2)
-    fs.writeFileSync('./db/db.json', note,()=>{console.log('added')});
+    fs.writeFileSync('../db/db.json', note,()=>{console.log('added')});
     res.send(notesSaved)
 });
 
