@@ -7,33 +7,33 @@ const writeFileAsync = util.promisify(fs.writeFile);
 class Store {
 
     readNotes() {
-        return readFileAsync('/db/db.json', 'utf8');
+        return readFileAsync('../db/db.json', 'utf8');
     };
 
-    writeNotes(data) {
-        return writeFileAsync('/db/db.json', JSON.stringify(data));
+    writeNotes(note) {
+        return writeFileAsync('../db/db.json', JSON.stringify(note));
     }
 
     getNotes() {
-        return this.readNotes().then(data => {
-            let notes;
+        return this.readNotes().then(notes => {
+            let notesNew;
 
             try {
-                notes = [].concat(JSON.parse(data))
+                notesNew = [].concat(JSON.parse(notes))
             } catch(err){
-                notes = [];
+                notesNew = [];
             };
-            return notes
+            return notesNew
         });
     };
 
-    addNotes(data) {
-        const { title, text} = data
+    addNotes(note) {
+        const { title, text} = note
         if(!title || !text){
             throw new Error('You must fill in the required information!');
         } 
         const finalNote = {title, text, id:uniqid() }
-        return this.getNotes().then(data => [...data, finalNote]).then(data => this.writeNotes(data));
+        return this.getNotes().then(notes => [...notes, finalNote]).then(updateNotes => this.writeNotes(updateNotes));
     }
 
 
